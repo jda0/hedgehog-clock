@@ -1,0 +1,5 @@
+.pioenvs
+.piolibdeps
+CMakeListsPrivate.txt
+.vscode
+.vscode/c_cpp_properties.json
