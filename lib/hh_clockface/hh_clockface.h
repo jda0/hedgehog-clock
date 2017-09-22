@@ -3,6 +3,7 @@
 
 #include "string.h"
 #include "ESP_SSD1306.h"
+#include "hh_persistence.h"
 #include "hh_symbols.h"
 #include "mintime.h"
 
@@ -18,13 +19,12 @@ public:
     FACE_ALARM_RINGING_INVERSE
   };
   
-  HHClockFace(Face *faces, int n, unsigned long alarm, int timeZone, const char *ip);
+  HHClockFace(Face *faces, int n, HHPersistence::HHSchema &data, const char *ip);
   void show(ESP_SSD1306& display, Face face, unsigned long epoch);
   void next(ESP_SSD1306& display, unsigned long epoch);
   void alarmFace(ESP_SSD1306& display, unsigned long epoch);
 
-  unsigned long alarmTime;
-  int timeZone;
+  HHPersistence::HHSchema * data;
   const char *ip;
 protected:
   Face *_faces;

@@ -1,8 +1,6 @@
 #ifndef _HEDGEHOG_WIFI_H
 #define _HEDGEHOG_WIFI_H
 
-#include "Arduino.h"
-#include "string.h"
 #include "ESP8266WiFi.h"
 #include "ESP_SSD1306.h"
 #include "hh_symbols.h"

@@ -1,14 +1,13 @@
 #include "hh_clockface.h"
 
-HHClockFace::HHClockFace(Face *faces, int n, unsigned long alarm, int timeZone, const char *ip) {
+HHClockFace::HHClockFace(Face *faces, int n, HHPersistence::HHSchema &data, const char *ip) {
   if (n > 0) {
     _faces = new Face[n];
     memcpy(_faces, faces, n * sizeof(faces[0]));
   }
   _n = n;
   _face = 0;
-  this->alarmTime = alarm;
-  this->timeZone = timeZone;
+  this->data = &data;
   this->ip = ip;
 }
 
@@ -51,14 +50,14 @@ void HHClockFace::show(ESP_SSD1306& display, Face face, unsigned long epoch) {
       display.drawXBitmap(42, 47, HHSX_Alarm.bitmap, 
           HHSX_Alarm.w, HHSX_Alarm.h, WHITE);
 
-      temp = Time::hour(alarmTime);
+      temp = data->alarm / 60;
       display.setCursor(56, 48);
       display.write(temp / 10 + '0');
       display.write(temp % 10 + '0');
       
       display.write(':');
 
-      temp = Time::minute(alarmTime);
+      temp = data->alarm % 60;
       display.write(temp / 10 + '0');
       display.write(temp % 10 + '0');
       break;
@@ -69,6 +68,7 @@ void HHClockFace::show(ESP_SSD1306& display, Face face, unsigned long epoch) {
 
       display.setCursor(49, 48);
       display.print("UPDATING");
+      break;
 
     case FACE_NTPOFFLINE:
       display.drawXBitmap(34, 47, HHSX_ClockFail.bitmap, 
@@ -76,13 +76,15 @@ void HHClockFace::show(ESP_SSD1306& display, Face face, unsigned long epoch) {
 
       display.setCursor(52, 48);
       display.print("OFFLINE");
+      break;
 
     case FACE_WIFICONNECT:
-        display.drawXBitmap(22, 50, HHSX_Wifi1.bitmap, 
-            HHSX_Wifi1.w, HHSX_Wifi1.h, WHITE);
-  
-        display.setCursor(37, 48);
-        display.print("RECONNECTING");
+      display.drawXBitmap(22, 50, HHSX_Wifi1.bitmap, 
+          HHSX_Wifi1.w, HHSX_Wifi1.h, WHITE);
+
+      display.setCursor(37, 48);
+      display.print("RECONNECTING");
+      break;
 
     case FACE_ALARM_RINGING:
       display.drawXBitmap(31, 47, HHSX_Alarm.bitmap, 
@@ -90,6 +92,7 @@ void HHClockFace::show(ESP_SSD1306& display, Face face, unsigned long epoch) {
       
       display.setCursor(49, 48);
       display.print("RINGING!");
+      break;
 
     case FACE_ALARM_RINGING_INVERSE:
       display.fillRect(0, 46, 128, 18, WHITE);
@@ -100,6 +103,7 @@ void HHClockFace::show(ESP_SSD1306& display, Face face, unsigned long epoch) {
       display.setCursor(49, 48);
       display.print("RINGING!");
       display.setTextColor(WHITE);
+      break;
   }
 
   display.display();

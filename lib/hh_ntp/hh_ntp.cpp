@@ -1,4 +1,5 @@
 #include "hh_ntp.h"
+//#include "Arduino.h" //debug
 
 HHNtp::HHNtp(const char *serverName) {
   ntpServerName = serverName;
@@ -15,6 +16,8 @@ void HHNtp::overrideOnlineFlag(bool flag) {
 }
 
 bool HHNtp::isOnline() {
+//  Serial.println("NTP ONLINE:"); //debug
+//  Serial.println(online); //debug
   return online;
 }
 
@@ -46,13 +49,16 @@ unsigned long HHNtp::sendNTPpacket(IPAddress& address) {
 
 unsigned long HHNtp::connect() {
   int ok;
+  Udp.begin(localPort);
 
   if (WiFi.hostByName(ntpServerName, ntpServerIp)) {
-    for (int i = 0; i < 30 && !(ok = Udp.parsePacket()); i++) {
+    ok = false;
+    for (int i = 0; i < 30 && !ok; i++) {
       if (i % 10 == 0) {
         sendNTPpacket(ntpServerIp);
       }
 
+      ok = Udp.parsePacket();
       delay(200);
     }
   }
@@ -76,6 +82,7 @@ unsigned long HHNtp::connect() {
 }
 
 unsigned long HHNtp::visualConnect(ESP_SSD1306& display) {
+  Udp.begin(localPort);
   int ok = WiFi.hostByName(ntpServerName, ntpServerIp);
 
   display.clearDisplay();
@@ -88,6 +95,7 @@ unsigned long HHNtp::visualConnect(ESP_SSD1306& display) {
   if (ok) {
     display.print("Try  /3");
 
+    ok = false;
     for (int i = 0; i < 30 && !ok; i++) {
       if (i % 10 == 0) {
         sendNTPpacket(ntpServerIp);
@@ -112,9 +120,8 @@ unsigned long HHNtp::visualConnect(ESP_SSD1306& display) {
             HHSX_Clock3.w, HHSX_Clock3.h, WHITE);
 
       display.display();
-      delay(200);
-      
       ok = Udp.parsePacket();
+      delay(200);
     }
   }
 

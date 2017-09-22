@@ -25,9 +25,11 @@ HHPersistence::HHSchema * HHPersistence::get() {
   EEPROM.end();
 
   return data;
+
+  // return NULL; //debug
 }
 
-void HHPersistence::write(HHSchema& data) {
+bool HHPersistence::write(HHSchema& data) {
   int addr = 0;
 
   EEPROM.begin(sizeof(HHSchema));
@@ -44,5 +46,7 @@ void HHPersistence::write(HHSchema& data) {
   EEPROM.write(addr++, (data.alarm >> 16) & 0xFF);
   EEPROM.write(addr++, (data.alarm >> 24) & 0xFF);
 
-  EEPROM.commit();
+  return EEPROM.commit();
+
+  // return 1; //debug
 }

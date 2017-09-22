@@ -13,7 +13,7 @@ namespace HHPersistence {
   };
 
   HHSchema * get();
-  void write(HHSchema &data);
+  bool write(HHSchema &data);
 }
 
 #endif // _HEDGEHOG_PERSISTENCE_H
