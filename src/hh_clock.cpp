@@ -23,6 +23,9 @@ void setup() {
   if (!restored) {
     data = new HHPersistence::HHSchema();
 
+    data->verify = 'H';
+    data->version = 'a';
+
     if (wifi->visualConnect(display) != WL_CONNECTED) {
       while (1) { delay(1); } // not connected; do nothing
     }
@@ -40,9 +43,6 @@ void setup() {
 
   }
 
-  os_timer_setfn(&clock, onTick, NULL);
-  os_timer_arm(&clock, 1000, true);
-
   HHClockFace::Face faces[] = {HHClockFace::Face::FACE_ALARM_INFO, HHClockFace::Face::FACE_IP};
   face = new HHClockFace(faces, sizeof(faces) / sizeof(faces[0]), *data, wifi->localIP());
 //  Serial.println("FACES:"); //debug
@@ -56,12 +56,13 @@ void setup() {
       while (1) { delay(1); }
     }
 
+    face->ip = wifi->localIP();
     face->show(display, HHClockFace::Face::FACE_NTPCONNECT, data->epoch);
 
     unsigned long tempEpoch = ntp->connect();
 //    Serial.println("NTP TIME:"); //debug
 //    Serial.println(data->epoch); //debug
-    if (!ntp->isOnline()) {
+    if (ntp->isOnline()) {
       data->epoch = tempEpoch;
       if ((data->epoch % 86400) / 60 == data->alarm) {
         alarmRang = true;
@@ -73,6 +74,9 @@ void setup() {
   }
 
   HHServer::beginServer(data);
+  
+  os_timer_setfn(&clock, onTick, NULL);
+  os_timer_arm(&clock, 1000, true);
 
   // goto loop
 }
@@ -111,6 +115,10 @@ void loop() {
       unsigned long tempEpoch = ntp->connect();
       if (ntp->isOnline()) {
         data->epoch = tempEpoch;
+        HHPersistence::write(*data);
+      } else {
+        face->show(display, HHClockFace::Face::FACE_NTPOFFLINE, data->epoch);
+        delay(secsPerDisplayUpdate * 1000);
       }
     } else {
 //      Serial.println("NEXT FACE"); //debug

@@ -1,4 +1,5 @@
 #include "hh_persistence.h"
+// #include "Arduino.h" //debug
 
 HHPersistence::HHSchema * HHPersistence::get() {
   int addr = 0;
@@ -8,6 +9,8 @@ HHPersistence::HHSchema * HHPersistence::get() {
 
   data->verify = EEPROM.read(addr++);
   data->version = EEPROM.read(addr++);
+
+  // Serial.printf("READ verify %d [%c], version %d [%c]", data->verify, data->verify, data->version, data->version); //debug
 
   if (data->verify != 'H' || data->version != 'a')
     return NULL;
@@ -31,6 +34,8 @@ HHPersistence::HHSchema * HHPersistence::get() {
 
 bool HHPersistence::write(HHSchema& data) {
   int addr = 0;
+
+  // Serial.printf("WRITE verify %d [%c], version %d [%c]", data.verify, data.verify, data.version, data.version); //debug
 
   EEPROM.begin(sizeof(HHSchema));
 
