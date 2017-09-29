@@ -6,7 +6,7 @@ Turn your Hedgehog Bot into a runaway alarm clock!
 
 ## Build
 
-Install PlatformIO Core or Platform IDE and build for `d1_mini`. The project follows the standard PlatformIO structure so all other settings should be fine at their defaults.
+Install PlatformIO Core or PlatformIO IDE and build for `d1_mini`. The project follows the standard PlatformIO structure so all other settings should be fine at their defaults.
 
 ## Branches
 
@@ -18,4 +18,4 @@ Install PlatformIO Core or Platform IDE and build for `d1_mini`. The project fol
 ## Contributing
 
 - Please contribute through PRs.
-- If contributing to `starter`, please ensure that any relevant changes to `master` are committed, and parent your commit.
+- If contributing to `starter`, please ensure that any relevant changes to `master` are committed and parent your commit.
