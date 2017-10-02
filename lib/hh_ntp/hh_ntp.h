@@ -3,7 +3,7 @@
 
 #include "string.h"
 #include "ESP8266WiFi.h"
-#include "WifiUdp.h"
+#include "WiFiUdp.h"
 #include "ESP_SSD1306.h"
 #include "hh_symbols.h"
 
