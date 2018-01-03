@@ -1,6 +1,19 @@
 #include "hh_clock.h"
 #include "Arduino.h" //debug
 
+
+// IMPORTANT! READ ME FIRST:
+//
+// Some lines contain hints for todos later on. You can search for these lines
+// by pressing Ctrl and F on your keyboard at the same time.
+//
+// All todos (except making your hedgehog dance) can be done in one line, and
+// you do not need to remove anything. Every TODO needs to be completed for
+// this project to work fully.
+//
+// Some todos also require you to look in other files.
+
+
 const unsigned long secsPerDisplayUpdate = 10;
 const unsigned long secsPerNtcUpdate = 10 * 60;
 
@@ -78,7 +91,7 @@ void setup() {
     //  `classes` and `namespaces`) within them which can be accessed directly, like above.
 
   if (restored) {
-    face->show(display, HHClockFace::Face::FACE_WIFICONNECT, data->epoch);
+    face->show(display, HHClockFace::Face::FACE_WIFICONNECT, data->epoch); // HINT1
     
     if (wifi->connect() != WL_CONNECTED) { // try to reconnect to network
       wifi->visualFail(display);
@@ -86,17 +99,17 @@ void setup() {
     }
 
     face->ip = wifi->localIP();
-    // TODO: show FACE_NTPCONNECT (the same way we showed FACE_WIFICONNECT in line 81)
+    // TODO: show FACE_NTPCONNECT (the same way we showed FACE_WIFICONNECT in HINT1)
 
-    unsigned long tempEpoch = ntp->connect();
+    unsigned long tempEpoch = ntp->connect(); // HINT2
     if (ntp->isOnline()) {
       data->epoch = tempEpoch;
       if ((data->epoch % 86400) / 60 == data->alarm) { // if the alarm should be going off...
-        alarmRang = true;                              // ...prevent it going off for now!
+        alarmRang = true; // HINT4                     // ...prevent it going off for now!
       }
     } else {
-      // TODO: show FACE_NTPOFFLINE (the same way we showed FACE_WIFICONNECT in line 81)
-      delay(secsPerDisplayUpdate * 1000);
+      // TODO: show FACE_NTPOFFLINE (the same way we showed FACE_WIFICONNECT in line HINT1)
+      delay(secsPerDisplayUpdate * 1000); // HINT3
     }
   }
 
@@ -127,24 +140,24 @@ void loop() {
       }
       // END TODO: dance pony dance!
     } else if (ntp->getLastTime() + secsPerNtcUpdate < data->epoch) {
-      // TODO: show FACE_NTPCONNECT (the same way we showed FACE_WIFICONNECT in line 81)
+      // TODO: show FACE_NTPCONNECT (the same way we showed FACE_WIFICONNECT in HINT1)
       unsigned long tempEpoch = 0; // TODO: replace 0 with something NTP related...
-                                   // ...maybe see line 91?
+                                   // ...maybe see line HINT2?
       if (0) { // TODO: replace 0 with something that tells us whether NTP is online...
-               // ..maybe see line 92?
-        // TODO: copy our temporary time to our data. Maybe see line 93?
+               // ..maybe see the line after HINT2?
+        // TODO: copy our temporary time to our data. Maybe see two lines after HINT2?
         // TODO: Write our data to storage, using a function inside `HHPersistence`. You'll need to
         //  put `*data` in the brackets, to send the information `data` points to.
       } else {
         face->show(display, HHClockFace::Face::FACE_NTPOFFLINE, data->epoch);
-        // TODO: wait for the next display update using `delay`. Maybe see line 99?
+        // TODO: wait for the next display update using `delay`. Maybe see HINT3?
       }
     } else {
       face->next(display, data->epoch);
 
       if ((data->epoch % 86400) / 60 > data->alarm) {
         bool a = false; // TODO: reset the alarm by changing `bool a` to something else...
-                        // ...that maybe on line 95?
+                        // ...that maybe on line HINT4?
       }
     }
   }
