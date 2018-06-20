@@ -5,11 +5,14 @@
 // IMPORTANT! READ ME FIRST:
 //
 // Some lines contain hints for todos later on. You can search for these lines
-// by pressing Ctrl and F on your keyboard at the same time.
+// by pressing Ctrl and F on your keyboard at the same time, then typing in what
+// to search for and clicking `Find`. All hints are written with two slashes and
+// a space in front, like `// HINTX`.
+// If you use macOS, press Command(⌘) and F at the same time instead.
 //
-// All todos (except making your hedgehog dance) can be done in one line, and
-// you do not need to remove anything. Every TODO needs to be completed for
-// this project to work fully.
+// All todos (except making your hedgehog dance) can be done in one line each, 
+// and you do not need to remove anything. Every TODO needs to be completed 
+// for this project to work fully.
 //
 // Some todos also require you to look in other files.
 
@@ -20,12 +23,12 @@ const unsigned long secsPerNtcUpdate = 10 * 60;
 void setup() {
   // TODO: start motors. This line is the same as one in Challenge 2.
 
-  display.begin(SSD1306_SWITCHCAPVCC);
+  display.begin(SSD1306_SWITCHCAPVCC); // Start talking to our display ( hello, display :D ).
   display.setTextColor(WHITE);
   display.setTextWrap(false);
 
-  wifi = new HHWifi("J-Ph8", "alphabet"); // Fill these with the SSID and passphrase of the network
-                                          //  your hedgehog will connect to.
+  wifi = new HHWifi("ssid", "password"); // TODO: Fill these with the SSID and passphrase of the 
+                                         //  network your hedgehog will connect to.
   ntp = new HHNtp("pool.ntp.org");
 
   Serial.begin(9600); //debug
@@ -50,8 +53,10 @@ void setup() {
                                           // `HHPersistence` is a `namespace` - think of it like a
                                           //  toybox to keep similar things together. We get things
                                           //  out of the toybox with two colons.
-                                          // `HHSchema` is a struct, which is like a form and keeps
-                                          //  similar information together in a structured way.
+                                          // `HHSchema` is a struct, which is like a form (such as
+                                          //  the forms you fill out to be allowed to go on school
+                                          //  trips) and keeps similar information together in a 
+                                          //  structured way.
                                           // You can have a look at `HHPersistence` in
                                           //  `../lib/hh_persistence`.
 
@@ -108,7 +113,7 @@ void setup() {
         alarmRang = true; // HINT4                     // ...prevent it going off for now!
       }
     } else {
-      // TODO: show FACE_NTPOFFLINE (the same way we showed FACE_WIFICONNECT in line HINT1)
+      // TODO: show FACE_NTPOFFLINE (the same way we showed FACE_WIFICONNECT in HINT1)
       delay(secsPerDisplayUpdate * 1000); // HINT3
     }
   }
@@ -163,7 +168,8 @@ void loop() {
   }
 
   // TODO: handle a client to our server. You'll need to look in `../src/hh_server.h` for the right
-  //  function, which takes no arguments and is in the `HHServer` namespace.
+  //  function, which takes no arguments (has empty brackets after the name), and is in the 
+  //  `HHServer` namespace.
 
 }
 
