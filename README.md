@@ -12,6 +12,7 @@ Install PlatformIO Core or PlatformIO IDE and build for `d1_mini`. The project f
 
 - `master` contains the latest full code. Primary development will be done here.
 - `starter` contains the workshop code skeleton, branched from the relevant `master` commit.
+  - **Now compatible with Arduino IDE! Just open `src/src.ino`**
 - `intermediate` and `staging` are reserved for future development.
 - Use of other branches is not recommended.
 
@@ -19,3 +20,5 @@ Install PlatformIO Core or PlatformIO IDE and build for `d1_mini`. The project f
 
 - Please contribute through PRs.
 - If contributing to `starter`, please ensure that any relevant changes to `master` are committed and parent your commit.
+- `starter:src/hh_clock.cpp` contains a lot of TODOs for workshop partipants to do, with lots of comments to help.
+    - I hope this can be extended to `starter:src/hh_server.cpp` and some of the libs
