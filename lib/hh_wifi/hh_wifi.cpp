@@ -16,7 +16,7 @@ wl_status_t HHWifi::connect() {
   }
   
   IPAddress ip = WiFi.localIP();
-  sprintf(_ip, "%d.%d.%d.%d", _ip[0], _ip[1], _ip[2], _ip[3]);
+  sprintf(_ip, "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
 
   return WiFi.status();
 }
@@ -59,7 +59,7 @@ wl_status_t HHWifi::visualConnect(ESP_SSD1306& display) {
     }
 
     IPAddress ip = WiFi.localIP();
-    sprintf(_ip, "%d.%d.%d.%d", _ip[0], _ip[1], _ip[2], _ip[3]);
+    sprintf(_ip, "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
 
     display.display();
     delay(200);

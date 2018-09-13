@@ -10,7 +10,7 @@ void setup() {
   display.setTextColor(WHITE);
   display.setTextWrap(false);
 
-  wifi = new HHWifi("J-Ph8", "alphabet");
+  wifi = new HHWifi("The Wifi", "8 characters or longer with CAPITAL LETTERS");
   ntp = new HHNtp("pool.ntp.org");
 
   Serial.begin(9600); //debug
@@ -53,6 +53,8 @@ void setup() {
     
     if (wifi->connect() != WL_CONNECTED) { // try to reconnect to network
       wifi->visualFail(display);
+      data->verify = 'G';
+      HHPersistence::write(*data);
       while (1) { delay(1); }
     }
 
