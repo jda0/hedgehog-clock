@@ -19,6 +19,6 @@ Install PlatformIO Core or PlatformIO IDE and build for `d1_mini`. The project f
 ## Contributing
 
 - Please contribute through PRs.
-- If contributing to `starter`, please ensure that any relevant changes to `master` are committed and parent your commit.
+- If contributing to `starter`, please ensure that any relevant changes to `master` are committed and parent your commit, i.e. `git checkout starter && git merge --no-ff --no-commit master`
 - `starter:src/hh_clock.cpp` contains a lot of TODOs for workshop partipants to do, with lots of comments to help.
     - I hope this can be extended to `starter:src/hh_server.cpp` and some of the libs
