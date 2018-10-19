@@ -11,12 +11,16 @@ HHClockFace::HHClockFace(Face *faces, int n, HHPersistence::HHSchema &data, cons
   this->ip = ip;
 }
 
-void HHClockFace::next(ESP_SSD1306& display, unsigned long epoch) {
+void HHClockFace::next(ESP_SSD1306& display, unsigned long epoch, int tz) {
   ++_face %= _n;
-  show(display, _faces[_face], epoch);
+  show(display, _faces[_face], epoch, tz);
 }
 
-void HHClockFace::show(ESP_SSD1306& display, Face face, unsigned long epoch) {
+void HHClockFace::next(ESP_SSD1306& display, unsigned long epoch) {
+  next(display, epoch, 0);
+}
+
+void HHClockFace::show(ESP_SSD1306& display, Face face, unsigned long epoch, int tz) {
   unsigned int temp;
 
   display.clearDisplay();
@@ -27,7 +31,7 @@ void HHClockFace::show(ESP_SSD1306& display, Face face, unsigned long epoch) {
 
   display.setTextSize(3);
 
-  temp = Time::hour(epoch);
+  temp = Time::hour(epoch, tz);
   display.setCursor(22, 16);
   display.write(temp / 10 + '0');
   display.write(temp % 10 + '0');
@@ -109,7 +113,15 @@ void HHClockFace::show(ESP_SSD1306& display, Face face, unsigned long epoch) {
   display.display();
 }
 
-void HHClockFace::alarmFace(ESP_SSD1306& display, unsigned long epoch) {
+void HHClockFace::show(ESP_SSD1306& display, Face face, unsigned long epoch) {
+  show(display, face, epoch, 0);
+}
+
+void HHClockFace::alarmFace(ESP_SSD1306& display, unsigned long epoch, int tz) {
   ++_face %= 2;
-  show(display, _face ? FACE_ALARM_RINGING : FACE_ALARM_RINGING_INVERSE, epoch);
+  show(display, _face ? FACE_ALARM_RINGING : FACE_ALARM_RINGING_INVERSE, epoch, tz);
+}
+
+void HHClockFace::alarmFace(ESP_SSD1306& display, unsigned long epoch) {
+  alarmFace(display, epoch, 0);
 }

@@ -20,8 +20,11 @@ public:
   };
   
   HHClockFace(Face *faces, int n, HHPersistence::HHSchema &data, const char *ip);
+  void show(ESP_SSD1306& display, Face face, unsigned long epoch, int tz);
   void show(ESP_SSD1306& display, Face face, unsigned long epoch);
+  void next(ESP_SSD1306& display, unsigned long epoch, int tz);
   void next(ESP_SSD1306& display, unsigned long epoch);
+  void alarmFace(ESP_SSD1306& display, unsigned long epoch, int tz);
   void alarmFace(ESP_SSD1306& display, unsigned long epoch);
 
   HHPersistence::HHSchema * data;

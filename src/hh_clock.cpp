@@ -49,7 +49,7 @@ void setup() {
 //  Serial.println(sizeof(faces) / sizeof(faces[0])); //debug
 
   if (restored) {
-    face->show(display, HHClockFace::Face::FACE_WIFICONNECT, data->epoch);
+    face->show(display, HHClockFace::Face::FACE_WIFICONNECT, data->epoch, data->timeZone);
     
     if (wifi->connect() != WL_CONNECTED) { // try to reconnect to network
       wifi->visualFail(display);
@@ -59,7 +59,7 @@ void setup() {
     }
 
     face->ip = wifi->localIP();
-    face->show(display, HHClockFace::Face::FACE_NTPCONNECT, data->epoch);
+    face->show(display, HHClockFace::Face::FACE_NTPCONNECT, data->epoch, data->timeZone);
 
     unsigned long tempEpoch = ntp->connect();
 //    Serial.println("NTP TIME:"); //debug
@@ -70,7 +70,7 @@ void setup() {
         alarmRang = true;
       }
     } else {
-      face->show(display, HHClockFace::Face::FACE_NTPOFFLINE, data->epoch);
+      face->show(display, HHClockFace::Face::FACE_NTPOFFLINE, data->epoch, data->timeZone);
       delay(secsPerDisplayUpdate * 1000);
     }
   }
@@ -113,18 +113,18 @@ void loop() {
 //      Serial.println(ntp->getLastTime() % 86400); //debug
 //      Serial.println("BETWEEN UPDATES (secs):"); //debug
 //      Serial.println(secsPerNtcUpdate); //debug
-      face->show(display, HHClockFace::Face::FACE_NTPCONNECT, data->epoch);
+      face->show(display, HHClockFace::Face::FACE_NTPCONNECT, data->epoch, data->timeZone);
       unsigned long tempEpoch = ntp->connect();
       if (ntp->isOnline()) {
         data->epoch = tempEpoch;
         HHPersistence::write(*data);
       } else {
-        face->show(display, HHClockFace::Face::FACE_NTPOFFLINE, data->epoch);
+        face->show(display, HHClockFace::Face::FACE_NTPOFFLINE, data->epoch, data->timeZone);
         delay(secsPerDisplayUpdate * 1000);
       }
     } else {
 //      Serial.println("NEXT FACE"); //debug
-      face->next(display, data->epoch);
+      face->next(display, data->epoch, data->timeZone);
 
       if ((data->epoch % 86400) / 60 > data->alarm) {
         alarmRang = false;
