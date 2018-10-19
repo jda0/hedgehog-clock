@@ -98,10 +98,12 @@ void setup() {
     //  `classes` and `namespaces`) within them which can be accessed directly, like above.
 
   if (restored) {
-    face->show(display, HHClockFace::Face::FACE_WIFICONNECT, data->epoch); // HINT1
+    face->show(display, HHClockFace::Face::FACE_WIFICONNECT, data->epoch, data->timeZone); // HINT1
     
     if (wifi->connect() != WL_CONNECTED) { // try to reconnect to network
       wifi->visualFail(display);
+      data->verify = 'G';
+      HHPersistence::write(*data);
       while (1) { delay(1); }
     }
 
@@ -159,11 +161,11 @@ void loop() {
         // TODO: Write our data to storage, using a function inside `HHPersistence`. You'll need to
         //  put `*data` in the brackets, to send the information `data` points to. [10]
       } else {
-        face->show(display, HHClockFace::Face::FACE_NTPOFFLINE, data->epoch);
+        face->show(display, HHClockFace::Face::FACE_NTPOFFLINE, data->epoch, data->timeZone);
         // TODO: wait for the next display update using `delay`. Maybe see HINT3? [11]
       }
     } else {
-      face->next(display, data->epoch);
+      face->next(display, data->epoch, data->timeZone);
 
       if ((data->epoch % 86400) / 60 > data->alarm) {
         bool a = false; // TODO: reset the alarm by changing `bool a` to something else...
