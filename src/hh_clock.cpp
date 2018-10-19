@@ -59,12 +59,10 @@ void setup() {
                                           //  the forms you fill out to be allowed to go on school
                                           //  trips) and keeps similar information together in a 
                                           //  structured way.
-                                          // You can have a look at `HHPersistence` in
-                                          //  `../lib/hh_persistence`.
 
     data->verify = 'X';
     data->version = 'X'; // TODO: replace the Xs with the right letters, by finding them in
-                         //  `../lib/hh_persistence/hh_persistence.cpp`!
+                         //  `hh_persistence.cpp`!
                          // We made the decision to start the HHSchema with two characters to make
                          //  sure the information will make sense.
                          // As `data` is a pointer, we access the fields (like spaces on a form) by
@@ -174,7 +172,7 @@ void loop() {
     }
   }
 
-  // TODO: handle a client to our server. You'll need to look in `../src/hh_server.h` for the right
+  // TODO: handle a client to our server. You'll need to look in `hh_server.h` for the right
   //  function, which takes no arguments (has empty brackets after the name), and is in the 
   //  `HHServer` namespace. [13]
 
