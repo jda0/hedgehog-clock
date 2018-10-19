@@ -114,11 +114,11 @@ void setup() {
     if (ntp->isOnline()) {
       data->epoch = tempEpoch;
       if ((data->epoch % 86400) / 60 == data->alarm) { // if the alarm should be going off...
-        alarmRang = true; // HINT4                     // ...prevent it going off for now!
+        alarmRang = true; // HINT3                    // ...prevent it going off for now!
       }
     } else {
       // TODO: show FACE_NTPOFFLINE (the same way we showed FACE_WIFICONNECT in HINT1) [5]
-      delay(secsPerDisplayUpdate * 1000); // HINT3
+      delay(secsPerDisplayUpdate * 1000);
     }
   }
 
@@ -144,7 +144,7 @@ void loop() {
       //  dancemoves to show off when the alarm goes off! You'll need to be really clever
       //  here - moves before the while statement will happen once, and moves inside the curly
       //  brackets (called braces) will loop forever - but be careful with the delays!
-      // Remember, you need to use Motor.stop() if you want your hedgehog to stop moving! [6]
+      // Remember, you need to use Motor.stop() if you want your hedgehog to stop moving! [7]
       Motor.right();
       while (1) {
         face->alarmFace(display, data->epoch); // strobe display
@@ -152,24 +152,24 @@ void loop() {
       }
       // END TODO: dance pony dance!
     } else if (ntp->getLastTime() + secsPerNtcUpdate < data->epoch) {
-      // TODO: show FACE_NTPCONNECT (the same way we showed FACE_WIFICONNECT in HINT1) [7]
+      // TODO: show FACE_NTPCONNECT (the same way we showed FACE_WIFICONNECT in HINT1) [8]
       unsigned long tempEpoch = 0; // TODO: replace 0 with something NTP related...
                                    // ...maybe see line HINT2?
       if (0) { // TODO: replace 0 with something that tells us whether NTP is online...
-               // ..maybe see the line after HINT2? [8]
-        // TODO: copy our temporary time to our data. Maybe see two lines after HINT2? [9]
+               // ..maybe see the line after HINT2? [9]
+        // TODO: copy our temporary time to our data. Maybe see two lines after HINT2? [10]
         // TODO: Write our data to storage, using a function inside `HHPersistence`. You'll need to
-        //  put `*data` in the brackets, to send the information `data` points to. [10]
+        //  put `*data` in the brackets, to send the information `data` points to. [11]
       } else {
         face->show(display, HHClockFace::Face::FACE_NTPOFFLINE, data->epoch, data->timeZone);
-        // TODO: wait for the next display update using `delay`. Maybe see HINT3? [11]
+        delay(secsPerDisplayUpdate * 1000);
       }
     } else {
       face->next(display, data->epoch, data->timeZone);
 
       if ((data->epoch % 86400) / 60 > data->alarm) {
         bool a = false; // TODO: reset the alarm by changing `bool a` to something else...
-                        // ...that maybe on line HINT4? [12]
+                        // ...that maybe on line HINT3? [12]
       }
     }
   }
