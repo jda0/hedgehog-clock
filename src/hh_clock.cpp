@@ -15,13 +15,13 @@ void setup() {
 
   Serial.begin(9600); //debug
 
-  data = HHPersistence::get();
+  data = HHROM::get();
   bool restored = (data != NULL);
 //  Serial.println("RESTORED: "); //debug
 //  Serial.println(restored); //debug
 
   if (!restored) {
-    data = new HHPersistence::HHSchema();
+    data = new HHROM::HHSchema();
 
     data->verify = 'H';
     data->version = 'a';
@@ -54,7 +54,7 @@ void setup() {
     if (wifi->connect() != WL_CONNECTED) { // try to reconnect to network
       wifi->visualFail(display);
       data->verify = 'G';
-      HHPersistence::write(*data);
+      HHROM::write(*data);
       while (1) { delay(1); }
     }
 
@@ -117,7 +117,7 @@ void loop() {
       unsigned long tempEpoch = ntp->connect();
       if (ntp->isOnline()) {
         data->epoch = tempEpoch;
-        HHPersistence::write(*data);
+        HHROM::write(*data);
       } else {
         face->show(display, HHClockFace::Face::FACE_NTPOFFLINE, data->epoch, data->timeZone);
         delay(secsPerDisplayUpdate * 1000);
