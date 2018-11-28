@@ -35,7 +35,7 @@ void setup() {
 
   Serial.begin(9600); //debug
 
-  data = HHPersistence::get(); // We don't need to put a type in front of data, since we've already
+  data = HHROM::get(); // We don't need to put a type in front of data, since we've already
                                //  defined it in `hh_clock.h`. The `#include` at the top of this
                                //  file tells the compiler to have a look there first for stuff we 
                                //  need. 
@@ -49,10 +49,10 @@ void setup() {
                                   //  nowhere, and != means "is not"...
 
   if (!restored) { // ...so, this means 'if `data` does not point anywhere'
-    data = new HHPersistence::HHSchema(); // as we've not loaded any data, we need to create
+    data = new HHROM::HHSchema(); // as we've not loaded any data, we need to create
                                           //  somewhere to save information about our alarm clock, 
                                           //  like the time zone and when the alarm should ring.
-                                          // `HHPersistence` is a `namespace` - think of it like a
+                                          // `HHROM` is a `namespace` - think of it like a
                                           //  toybox to keep similar things together. We get things
                                           //  out of the toybox with two colons.
                                           // `HHSchema` is a struct, which is like a form (such as
@@ -62,7 +62,7 @@ void setup() {
 
     data->verify = 'X';
     data->version = 'X'; // TODO: replace the Xs with the right letters, by finding them in
-                         //  `hh_persistence.cpp`!
+                         //  `hh_rom.cpp`!
                          // We made the decision to start the HHSchema with two characters to make
                          //  sure the information will make sense.
                          // As `data` is a pointer, we access the fields (like spaces on a form) by
@@ -101,7 +101,7 @@ void setup() {
     if (wifi->connect() != WL_CONNECTED) { // try to reconnect to network
       wifi->visualFail(display);
       data->verify = 'G';
-      HHPersistence::write(*data);
+      HHROM::write(*data);
       while (1) { delay(1); }
     }
 

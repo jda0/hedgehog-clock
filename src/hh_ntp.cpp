@@ -25,7 +25,7 @@ unsigned long HHNtp::getLastTime() {
   return lastTime;
 }
 
-unsigned long HHNtp::sendNTPpacket(IPAddress& address) {
+void HHNtp::sendNTPPacket(IPAddress& address) {
   // set all bytes in the buffer to 0
   memset(buffer, 0, ntpPacketSize);
   // Initialize values needed to form NTP request
@@ -48,14 +48,13 @@ unsigned long HHNtp::sendNTPpacket(IPAddress& address) {
 // TODO: extract duplicate code in connect() & visualConnect()
 
 unsigned long HHNtp::connect() {
-  int ok;
+  int ok = 0;
   Udp.begin(localPort);
 
   if (WiFi.hostByName(ntpServerName, ntpServerIp)) {
-    ok = false;
     for (int i = 0; i < 30 && !ok; i++) {
       if (i % 10 == 0) {
-        sendNTPpacket(ntpServerIp);
+        sendNTPPacket(ntpServerIp);
       }
 
       ok = Udp.parsePacket();
@@ -98,7 +97,7 @@ unsigned long HHNtp::visualConnect(ESP_SSD1306& display) {
     ok = false;
     for (int i = 0; i < 30 && !ok; i++) {
       if (i % 10 == 0) {
-        sendNTPpacket(ntpServerIp);
+        sendNTPPacket(ntpServerIp);
         
         display.fillRect(78, 16, 10, 16, BLACK);
         display.drawChar(78, 16, (i / 10) + 0x31, WHITE, WHITE, 2);

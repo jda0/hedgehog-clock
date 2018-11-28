@@ -9,7 +9,7 @@ extern "C" {
 #include "hh_wifi.h"
 #include "hh_ntp.h"
 #include "hh_clockface.h"
-#include "hh_persistence.h"
+#include "hh_rom.h"
 #include "hh_server.h"
 
 ESP_SSD1306 display(16);
@@ -23,7 +23,7 @@ os_timer_t clock;
 // unsigned long epoch = 0;
 // unsigned long alarm = 0;
 
-HHPersistence::HHSchema *data;
+HHROM::HHSchema *data;
 
 bool alarmRang = false;
 

@@ -25,7 +25,7 @@ protected:
   bool online;
   unsigned long lastTime;
 
-  unsigned long sendNTPpacket(IPAddress& address);
+  void sendNTPPacket(IPAddress& address);
 };
 
 #endif // _HEDGEHOG_NTP_H

@@ -41,7 +41,7 @@ const char* indexPage PROGMEM = "<html lang=en>"
                                   "req.send('alarm='+document.getElementById('time').value+'&tz='+document.getElementById('tz').value)"
                                   "}</script>";
 
-void _handleUpdate(HHPersistence::HHSchema *data) {
+void _handleUpdate(HHROM::HHSchema *data) {
 //   Serial.println("REQUEST /update WITH"); //debug
 //   Serial.println(_server.arg("alarm")); //debug
   char *_alarm = strdup(_server.arg("alarm").c_str());
@@ -78,7 +78,7 @@ void _handleUpdate(HHPersistence::HHSchema *data) {
 //   Serial.println((atoi(_hour) * 60) + atoi(_min)); //debug
   data->alarm = (atoi(_hour) * 60) + atoi(_min);
   data->timeZone = tz;
-  bool ok = HHPersistence::write(*data);
+  bool ok = HHROM::write(*data);
   
   _server.sendHeader("Connection", "close");
   _server.send(200, "text/plain", "OK");
@@ -87,7 +87,7 @@ void _handleUpdate(HHPersistence::HHSchema *data) {
 //   // Serial.println(data->alarm); //debug
 }
 
-void HHServer::beginServer(HHPersistence::HHSchema *data) {
+void HHServer::beginServer(HHROM::HHSchema *data) {
   _server.on("/", []() {
 //     Serial.println("REQUEST /"); //debug
     _server.sendHeader("Connection", "close");
