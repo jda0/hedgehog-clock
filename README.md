@@ -1,4 +1,4 @@
-# ![Hedgehog Clock](https://raw.githubusercontent.com/jda0/hedgehog/gh-pages/assets/hedgehog_clock-vert-light.svg?sanitize=true)
+# ![Hedgehog Clock](https://raw.githubusercontent.com/mvse-outreach/arduino-hedgehog-bot/gh-pages/assets/media/hedgehog_clock-vert-light.svg?sanitize=true)
 
 # Starter package
 

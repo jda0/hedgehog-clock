@@ -18,7 +18,7 @@ HHWifi *wifi;
 HHNtp *ntp;
 HHClockFace *face;
 
-os_timer_t clock;
+os_timer_t clock_;
 
 // int timeZone = 1;
 // unsigned long epoch = 0;
