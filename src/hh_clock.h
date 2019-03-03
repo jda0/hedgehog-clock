@@ -11,6 +11,7 @@ extern "C" {
 #include "hh_clockface.h"
 #include "hh_rom.h"
 #include "hh_server.h"
+#include "mintime.h"
 
 ESP_SSD1306 display(16);
 HHWifi *wifi;

@@ -12,7 +12,8 @@ HHROM::HHSchema * HHROM::get() {
 
   // Serial.printf("READ verify %d [%c], version %d [%c]", data->verify, data->verify, data->version, data->version); //debug
 
-  if (data->verify != 'H' || data->version != 'a')
+  if (data->verify != 'H' || data->version != 'a') // These might be useful if you're competing the 
+                                                   //  todos in `hh_clock.cpp::setup`...
     return NULL;
 
   data->timeZone = EEPROM.read(addr++);

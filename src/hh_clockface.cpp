@@ -1,6 +1,6 @@
 #include "hh_clockface.h"
 
-HHClockFace::HHClockFace(Face *faces, int n, HHPersistence::HHSchema &data, const char *ip) {
+HHClockFace::HHClockFace(Face *faces, int n, HHROM::HHSchema &data, const char *ip) {
   if (n > 0) {
     _faces = new Face[n];
     memcpy(_faces, faces, n * sizeof(faces[0]));
