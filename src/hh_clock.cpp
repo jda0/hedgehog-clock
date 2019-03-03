@@ -125,9 +125,9 @@ void setup() {
 
   HHServer::beginServer(data);
   
-  os_timer_setfn(&clock, onTick, NULL); // This tells the computer to run `onTick()` every
+  os_timer_setfn(&clock_, onTick, NULL); // This tells the computer to run `onTick()` every
                                         //  time its internal clock ticks...
-  os_timer_arm(&clock, 1000, true);     // ...and this starts the internal clock, and makes it
+  os_timer_arm(&clock_, 1000, true);     // ...and this starts the internal clock, and makes it
                                         //  tick every 1000 milliseconds.
 
   // goto loop
